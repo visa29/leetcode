@@ -1,18 +1,25 @@
 int trap(int* h, int n) {
- int lm[n] , rm[n] , res = 0;  
- lm[0] = h[0];
- for (int i = 1; i < n; i++)
- {
-    lm[i] = fmax(lm[i-1], h[i]);
- }
- rm[n-1] = h[n-1];
- for (int i = n-2; i >=0; i--)
- {
-    rm[i] = fmax(rm[i+1], h[i]);
- }
- for (int i = 0; i < n; i++)
- {
- res += fmin(lm[i] , rm[i]) - h[i];
- }
-return res;
+int lm = 0 , rm = 0 , right = n-1 , left = 0, res = 0;  
+while (left < right)
+{
+    if ( h[left] < h[right])
+    {
+        if (lm < h[left])
+            lm = h[left];
+        else 
+            res += (lm - h[left]);
+            ++left;
+    }
+    else
+    {
+        if (rm < h[right])
+        {
+            rm = h[right];
+        }
+        else 
+            res += rm - h[right];
+            --right;
+    }
+}
+    return res;
 }
